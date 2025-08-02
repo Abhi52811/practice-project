@@ -1,13 +1,13 @@
 name: Deployment Exercise 2
-on: 
+on:
   pull_request:
-    - opened
-  workflow_dispatch:
+    types: [opened]
+  workflow_dispatch: {}
   push:
     branches:
-     - main 
-     - 'dev-*' 
-     - test/** 
+      - main
+      - 'dev-*'
+      - 'test/**'
     paths-ignore:
       - '.github/workflows/*'
 jobs:
