@@ -36,7 +36,7 @@ jobs:
           npx jest --json --outputFile=reports/test.json
 
       - name: Upload test report if tests fail
-        if: steps.run-tests.outcome == 'failure'
+        if: failure() && steps.run-tests.outcome == 'failure'
         uses: actions/upload-artifact@v4
         with:
           name: test-report
@@ -93,4 +93,4 @@ jobs:
       - name: Output information
         run:  |
           echo "Something went wrong"
-          echo "${{ github}}"
+          echo "${{ toJSON(github) }}"
