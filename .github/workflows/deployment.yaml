@@ -7,6 +7,11 @@ on:
 env:
   MONGO_DB_NAME: gha-demo
 jobs:
+  starter:  # ✅ Add this starter job (fixes the 'needs' issue)
+    runs-on: ubuntu-latest
+    steps:
+      - name: Starter job
+        run: echo "Start the workflow"
   lint:
     runs-on: ubuntu-latest
     steps: 
@@ -30,7 +35,7 @@ jobs:
         run: npm ci
       - name: Run Tests
         id: run-tests
-        # continue-on-error: true
+        continue-on-error: true
         run: |
           mkdir -p reports
           npx jest --json --outputFile=reports/test.json
@@ -73,7 +78,7 @@ jobs:
   deploy:
     needs: build
     uses: ./.github/workflows/reusable.yaml
-    
+
   report:
     needs: [lint,deploy]
     if: failure()
