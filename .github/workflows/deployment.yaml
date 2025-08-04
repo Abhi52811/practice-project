@@ -2,7 +2,7 @@ name: Deployment Exercise
 on: 
   push:
     branches:
-      - main
+      - master
       - dev
 env:
   MONGO_DB_NAME: gha-demo
