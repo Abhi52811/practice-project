@@ -29,18 +29,20 @@ jobs:
           key: deps-node-modules-${{ hashFiles('**/package-lock.json') }}
       - name: Install Dependencies
         run: npm ci
-      - name: Run Tests and Save Report
-        id: run-test
+      - name: Run Tests
+        id: run-tests
         continue-on-error: true
         run: |
           mkdir -p reports
           npx jest --json --outputFile=reports/test.json
-      - name: Upload Test Report (Only if Test Fails)
-        if: failure() && steps.run-test.outcome == 'failure'
+
+      - name: Upload test report if tests fail
+        if: steps.run-tests.outcome == 'failure'
         uses: actions/upload-artifact@v4
         with:
           name: test-report
           path: reports/test.json
+
 
   build:
     needs: test
