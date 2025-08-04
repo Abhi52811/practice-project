@@ -80,6 +80,15 @@ jobs:
     uses: ./.github/workflows/reusable.yaml
     with:
       artifact-name: dist-files
+    # secrets:
+    #   some-secret: ${{ secrets.some-secret }}
+
+  print-deploy-result:
+    needs: deploy
+    runs-on: ubuntu-latest
+    steps:
+      - name: Print deploy output
+        run: echo "${{ needs.deploy.output.result }}"
 
   report:
     needs: [lint,deploy]
@@ -90,3 +99,4 @@ jobs:
         run:  |
           echo "Something went wrong"
           echo "${{ toJSON(github) }}"
+  
